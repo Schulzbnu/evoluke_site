@@ -5,11 +5,13 @@ import { ArrowLeft } from "lucide-react";
 import Container from "@/components/Container";
 import SolutionCard from "@/components/SolutionCard";
 import CTASection from "@/components/CTASection";
+import JsonLd from "@/components/JsonLd";
 import {
   getSegmento,
   getSegmentoSlugs,
   segmentos,
 } from "@/data/segmentos";
+import { serviceSchema, segmentoBreadcrumbSchema } from "@/data/structuredData";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -47,6 +49,8 @@ export default async function SegmentoPage({ params }: PageProps) {
 
   return (
     <>
+      <JsonLd data={[serviceSchema(seg), segmentoBreadcrumbSchema(seg)]} />
+
       {/* Cabeçalho da vertical */}
       <section className="relative overflow-hidden bg-ink-900 text-white">
         <div

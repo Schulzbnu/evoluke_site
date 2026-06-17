@@ -3,7 +3,9 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
 import { site } from "@/data/site";
+import { organizationSchema } from "@/data/structuredData";
 
 const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -51,6 +53,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={sans.variable}>
       <body className="flex min-h-screen flex-col font-sans">
+        <JsonLd data={organizationSchema()} />
         <a href="#conteudo" className="skip-link">
           Pular para o conteúdo
         </a>

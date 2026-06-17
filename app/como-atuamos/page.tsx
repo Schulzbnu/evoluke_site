@@ -84,6 +84,7 @@ export default function ComoAtuamosPage() {
       <section className="bg-ink-900 py-20 text-white sm:py-24">
         <Container>
           <SectionHeading
+            as="h1"
             light
             align="left"
             eyebrow="Como atuamos"
