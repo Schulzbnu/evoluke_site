@@ -6,6 +6,11 @@ interface SectionHeadingProps {
   description?: ReactNode;
   align?: "left" | "center";
   light?: boolean;
+  /**
+   * Nível do título. Use "h1" quando o cabeçalho for o título principal
+   * da página (hero); o padrão "h2" serve para títulos de seção.
+   */
+  as?: "h1" | "h2";
 }
 
 /** Cabeçalho de seção reutilizável (eyebrow + título + descrição). */
@@ -15,6 +20,7 @@ export default function SectionHeading({
   description,
   align = "center",
   light = false,
+  as: TitleTag = "h2",
 }: SectionHeadingProps) {
   const alignment = align === "center" ? "text-center mx-auto" : "text-left";
   return (
@@ -28,13 +34,13 @@ export default function SectionHeading({
           {eyebrow}
         </p>
       )}
-      <h2
+      <TitleTag
         className={`mt-3 text-3xl font-bold tracking-tight sm:text-4xl ${
           light ? "text-white" : "text-ink-900"
         }`}
       >
         {title}
-      </h2>
+      </TitleTag>
       {description && (
         <p
           className={`mt-4 text-lg leading-relaxed ${
