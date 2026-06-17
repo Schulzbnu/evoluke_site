@@ -80,56 +80,101 @@ export default function HomePage() {
         />
 
         <Container className="relative py-24 sm:py-32">
-          <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-sm font-medium text-white/80 backdrop-blur">
-              <Sparkles className="h-4 w-4 text-accent-300" aria-hidden="true" />
-              Consultoria e produtos de Inteligência Artificial
-            </span>
-
-            <h1 className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
-              Resolvemos problemas com IA —{" "}
-              <span className="bg-gradient-to-r from-accent-300 to-accent2 bg-clip-text text-transparent">
-                em qualquer setor
+          <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-12">
+            {/* Coluna de texto */}
+            <div className="max-w-2xl text-center lg:text-left">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-sm font-medium text-white/80 backdrop-blur">
+                <Sparkles className="h-4 w-4 text-accent-300" aria-hidden="true" />
+                Consultoria e produtos de Inteligência Artificial
               </span>
-              .
-            </h1>
 
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/70 sm:text-xl">
-              A Evoluke não vende uma tecnologia específica. Entendemos o
-              problema do seu negócio e entregamos a solução de IA certa — da
-              consultoria estratégica ao produto em produção.
-            </p>
+              <h1 className="mt-6 text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
+                Resolvemos problemas com IA —{" "}
+                <span className="bg-gradient-to-r from-accent-300 to-accent2 bg-clip-text text-transparent">
+                  em qualquer setor
+                </span>
+                .
+              </h1>
 
-            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button href="/contato" size="lg">
-                Resolver meu problema
-                <ArrowRight className="h-5 w-5" aria-hidden="true" />
-              </Button>
-              <Button href="/segmentos" size="lg" variant="ghost">
-                Explorar segmentos
-              </Button>
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70 sm:text-xl lg:mx-0 mx-auto">
+                A Evoluke não vende uma tecnologia específica. Entendemos o
+                problema do seu negócio e entregamos a solução de IA certa — da
+                consultoria estratégica ao produto em produção.
+              </p>
+
+              <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
+                <Button href="/contato" size="lg">
+                  Resolver meu problema
+                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                </Button>
+                <Button href="/segmentos" size="lg" variant="ghost">
+                  Explorar segmentos
+                </Button>
+              </div>
+
+              <dl className="mt-12 grid max-w-xl grid-cols-3 gap-6 border-t border-white/10 pt-8 lg:mx-0 mx-auto">
+                <div>
+                  <dt className="text-3xl font-bold text-white">6</dt>
+                  <dd className="mt-1 text-sm text-white/60">
+                    setores atendidos
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-3xl font-bold text-white">360°</dt>
+                  <dd className="mt-1 text-sm text-white/60">
+                    da estratégia ao produto
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-3xl font-bold text-white">∞</dt>
+                  <dd className="mt-1 text-sm text-white/60">
+                    problemas para resolver
+                  </dd>
+                </div>
+              </dl>
             </div>
 
-            <dl className="mx-auto mt-14 grid max-w-xl grid-cols-3 gap-6 border-t border-white/10 pt-8">
-              <div>
-                <dt className="text-3xl font-bold text-white">6</dt>
-                <dd className="mt-1 text-sm text-white/60">
-                  setores atendidos
-                </dd>
+            {/* Coluna visual */}
+            <div className="relative hidden lg:block">
+              <div className="relative mx-auto w-full max-w-md rounded-3xl border border-white/10 bg-white/[0.03] p-6 shadow-glow backdrop-blur">
+                <div className="flex items-center gap-2 border-b border-white/10 pb-4">
+                  <span className="h-3 w-3 rounded-full bg-accent/70" />
+                  <span className="h-3 w-3 rounded-full bg-accent2/60" />
+                  <span className="h-3 w-3 rounded-full bg-white/20" />
+                  <span className="ml-auto text-xs font-medium text-white/50">
+                    fluxo Evoluke
+                  </span>
+                </div>
+
+                <ul className="mt-5 space-y-3">
+                  {passos.map((passo, i) => {
+                    const Icon = passo.icon;
+                    return (
+                      <li
+                        key={passo.nome}
+                        className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-4"
+                      >
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/20 text-accent-300">
+                          <Icon className="h-5 w-5" aria-hidden="true" />
+                        </span>
+                        <div>
+                          <p className="text-xs font-bold uppercase tracking-wider text-accent-300">
+                            {String(i + 1).padStart(2, "0")} · {passo.nome}
+                          </p>
+                          <p className="mt-0.5 text-sm font-medium text-white/80">
+                            {passo.nome === "Entender"
+                              ? "Diagnóstico orientado ao problema"
+                              : passo.nome === "Construir"
+                                ? "Solução de IA sob medida"
+                                : "Em produção, gerando valor"}
+                          </p>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
-              <div>
-                <dt className="text-3xl font-bold text-white">360°</dt>
-                <dd className="mt-1 text-sm text-white/60">
-                  da estratégia ao produto
-                </dd>
-              </div>
-              <div>
-                <dt className="text-3xl font-bold text-white">∞</dt>
-                <dd className="mt-1 text-sm text-white/60">
-                  problemas para resolver
-                </dd>
-              </div>
-            </dl>
+            </div>
           </div>
         </Container>
       </section>
