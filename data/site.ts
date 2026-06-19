@@ -16,6 +16,39 @@ export const site = {
   telefone: "+55 (11) 4000-0000",
 };
 
+/**
+ * Configuração de identidade visual (logo e imagem de compartilhamento).
+ *
+ * Como ativar a logo em imagem:
+ *  1. Coloque o arquivo em `public/brand/` (ex.: `public/brand/logo.svg`).
+ *  2. Preencha `logo` com o caminho público (ex.: "/brand/logo.svg").
+ *  3. (Opcional) Preencha `logoLight` com a versão para fundos escuros
+ *     (usada no rodapé). Se ficar vazio, reutiliza `logo`.
+ *  4. Ajuste `logoWidth` / `logoHeight` para a proporção real do arquivo.
+ *
+ * Enquanto `logo` estiver vazio, o site continua exibindo o wordmark em texto.
+ *
+ * Favicon: NÃO é configurado aqui. O Next.js detecta automaticamente os
+ * arquivos `app/icon.*` e `app/apple-icon.*` (veja `public/brand/README.md`).
+ */
+export const branding = {
+  /** Caminho público da logo principal (fundos claros). Vazio = usa o wordmark em texto. */
+  logo: "",
+  /** Logo para fundos escuros (rodapé). Vazio = usa `logo`. */
+  logoLight: "",
+  /** Texto alternativo da logo (acessibilidade). */
+  logoAlt: `${site.nome} — logotipo`,
+  /** Dimensões intrínsecas da logo, em pixels (necessárias para o next/image). */
+  logoWidth: 132,
+  logoHeight: 36,
+  /**
+   * Imagem de compartilhamento social (Open Graph / Twitter), ~1200x630.
+   * Coloque em `public/brand/` e informe o caminho aqui (ex.: "/brand/og.png").
+   * Vazio = nenhuma imagem é declarada nos metadados.
+   */
+  ogImage: "",
+};
+
 export interface NavItem {
   label: string;
   href: string;
