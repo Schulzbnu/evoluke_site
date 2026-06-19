@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
-import { site } from "@/data/site";
+import { branding, site } from "@/data/site";
 import { organizationSchema } from "@/data/structuredData";
 
 const sans = Plus_Jakarta_Sans({
@@ -29,6 +29,11 @@ export const metadata: Metadata = {
     "Evoluke",
   ],
   authors: [{ name: site.nome }],
+  // O Next.js também detecta automaticamente os arquivos de ícone em
+  // `app/icon.*` e `app/apple-icon.*`. Mantemos `icon.svg` como ícone padrão.
+  icons: {
+    icon: "/icon.svg",
+  },
   openGraph: {
     type: "website",
     locale: "pt_BR",
@@ -36,11 +41,14 @@ export const metadata: Metadata = {
     siteName: site.nome,
     title: `${site.nome} — ${site.tagline}`,
     description: site.descricao,
+    // Imagem de compartilhamento adicionada apenas quando configurada.
+    ...(branding.ogImage ? { images: [{ url: branding.ogImage }] } : {}),
   },
   twitter: {
     card: "summary_large_image",
     title: `${site.nome} — ${site.tagline}`,
     description: site.descricao,
+    ...(branding.ogImage ? { images: [branding.ogImage] } : {}),
   },
   robots: { index: true, follow: true },
 };
