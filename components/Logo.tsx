@@ -26,7 +26,7 @@ export default function Logo({ light = false }: { light?: boolean }) {
           width={branding.logoWidth}
           height={branding.logoHeight}
           priority
-          className="h-9 w-auto"
+          className="h-10 w-auto"
         />
       ) : (
         <>
