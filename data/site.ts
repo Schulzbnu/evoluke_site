@@ -35,7 +35,7 @@ export const branding = {
   /** Caminho público da logo principal (fundos claros). Vazio = usa o wordmark em texto. */
   logo: "/brand/logo.svg",
   /** Logo para fundos escuros (rodapé). Vazio = usa `logo`. */
-  logoLight: "",
+  logoLight: "/brand/logo-light.svg",
   /** Texto alternativo da logo (acessibilidade). */
   logoAlt: `${site.nome} — logotipo`,
   /** Dimensões intrínsecas da logo, em pixels (necessárias para o next/image). */
