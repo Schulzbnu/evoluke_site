@@ -33,14 +33,14 @@ export const site = {
  */
 export const branding = {
   /** Caminho público da logo principal (fundos claros). Vazio = usa o wordmark em texto. */
-  logo: "",
+  logo: "/brand/logo.svg",
   /** Logo para fundos escuros (rodapé). Vazio = usa `logo`. */
   logoLight: "",
   /** Texto alternativo da logo (acessibilidade). */
   logoAlt: `${site.nome} — logotipo`,
   /** Dimensões intrínsecas da logo, em pixels (necessárias para o next/image). */
-  logoWidth: 132,
-  logoHeight: 36,
+  logoWidth: 250,
+  logoHeight: 100,
   /**
    * Imagem de compartilhamento social (Open Graph / Twitter), ~1200x630.
    * Coloque em `public/brand/` e informe o caminho aqui (ex.: "/brand/og.png").
