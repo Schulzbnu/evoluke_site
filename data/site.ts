@@ -39,8 +39,8 @@ export const branding = {
   /** Texto alternativo da logo (acessibilidade). */
   logoAlt: `${site.nome} — logotipo`,
   /** Dimensões intrínsecas da logo, em pixels (necessárias para o next/image). */
-  logoWidth: 250,
-  logoHeight: 100,
+  logoWidth: 229,
+  logoHeight: 76,
   /**
    * Imagem de compartilhamento social (Open Graph / Twitter), ~1200x630.
    * Coloque em `public/brand/` e informe o caminho aqui (ex.: "/brand/og.png").
