@@ -1,10 +1,5 @@
-<svg width="760" height="220" viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg">
+<svg width="672" height="220" viewBox="0 0 672 220" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="evolukeFlow" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#5B3FD9"/>
-      <stop offset="50%" stop-color="#7C5CFC"/>
-      <stop offset="100%" stop-color="#22D3EE"/>
-    </linearGradient>
     <linearGradient id="evolukeBadge2" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#5B3FD9"/>
       <stop offset="46%" stop-color="#7C5CFC"/>
@@ -12,7 +7,7 @@
     </linearGradient>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&amp;display=swap');
-      .wordmark { font-family:'Plus Jakarta Sans','Segoe UI',sans-serif; font-weight:800; font-size:104px; letter-spacing:-3px; }
+      .wordmark { font-family:'Plus Jakarta Sans','Segoe UI',sans-serif; font-weight:800; font-size:120px; letter-spacing:-3px; }
     </style>
   </defs>
 
@@ -26,6 +21,6 @@
     </g>
   </g>
 
-  <!-- wordmark: "Evo" tinta + "luke" gradiente -->
-  <text class="wordmark" x="208" y="145"><tspan fill="#0A0E1A">Evo</tspan><tspan fill="url(#evolukeFlow)">luke</tspan></text>
+  <!-- wordmark: texto escuro sólido (fundo claro) -->
+  <text class="wordmark" x="206" y="159" fill="#0A0E1A">Evoluke</text>
 </svg>
