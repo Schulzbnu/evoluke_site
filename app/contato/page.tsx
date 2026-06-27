@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Mail, Phone, Clock, MapPin } from "lucide-react";
+import { Mail, MessageCircle, Clock, MapPin } from "lucide-react";
 import Container from "@/components/Container";
 import ContactForm from "@/components/ContactForm";
 import { site } from "@/data/site";
@@ -18,10 +18,10 @@ const infos = [
     href: `mailto:${site.email}`,
   },
   {
-    icon: Phone,
-    titulo: "Telefone",
+    icon: MessageCircle,
+    titulo: "WhatsApp",
     valor: site.telefone,
-    href: `tel:${site.telefone.replace(/[^+\d]/g, "")}`,
+    href: `https://wa.me/${site.telefone.replace(/\D/g, "")}`,
   },
   {
     icon: Clock,
@@ -102,7 +102,13 @@ export default function ContatoPage() {
                   return (
                     <li key={info.titulo}>
                       {info.href ? (
-                        <a href={info.href} className="block">
+                        <a
+                          href={info.href}
+                          className="block"
+                          {...(info.href.startsWith("http")
+                            ? { target: "_blank", rel: "noopener noreferrer" }
+                            : {})}
+                        >
                           {content}
                         </a>
                       ) : (
