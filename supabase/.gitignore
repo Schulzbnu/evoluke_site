@@ -1,0 +1,4 @@
+# Arquivos locais do Supabase CLI — não versionar.
+.branches
+.temp
+.env

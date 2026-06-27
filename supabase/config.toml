@@ -1,0 +1,47 @@
+# Configuração do projeto Supabase (Supabase CLI).
+# A integração com o GitHub usa este arquivo + a pasta `migrations/`:
+# ao dar push das migrações na branch de produção, o Supabase aplica o schema.
+#
+# `project_id` deve ser o REF do projeto (URL do dashboard:
+# https://supabase.com/dashboard/project/<ref>).
+project_id = "kokeujpccnsmtfxaakae"
+
+[api]
+enabled = true
+# Porta da API REST local (`supabase start`). Não afeta produção.
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+# Porta do Postgres local. Não afeta produção.
+port = 54322
+shadow_port = 54320
+# Versão major do Postgres do projeto (deve bater com a do remoto: 17).
+major_version = 17
+
+[db.migrations]
+# Garante que o seed só roda em ambiente local / preview branches,
+# nunca sobrescrevendo dados de produção.
+enabled = true
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed.sql"]
+
+[studio]
+enabled = true
+port = 54323
+
+[realtime]
+enabled = true
+
+[storage]
+enabled = true
+
+[auth]
+enabled = true
+# Ajuste para o domínio real em produção, se for usar Auth do Supabase.
+site_url = "https://www.evoluke.com.br"
+additional_redirect_urls = ["https://www.evoluke.com.br"]
