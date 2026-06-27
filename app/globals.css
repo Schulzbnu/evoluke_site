@@ -24,4 +24,13 @@
   .skip-link {
     @apply absolute left-4 top-4 z-[100] -translate-y-24 rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white transition-transform focus:translate-y-0;
   }
+
+  /* Esconde a barra de rolagem mantendo o scroll (trilho de chips). */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
