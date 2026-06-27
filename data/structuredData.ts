@@ -6,7 +6,7 @@
  */
 
 import { site } from "./site";
-import type { Segmento } from "./segmentos";
+import { segmentos, type Segmento } from "./segmentos";
 
 /** Gera uma URL absoluta a partir de um caminho relativo. */
 function absoluteUrl(path: string): string {
@@ -73,6 +73,28 @@ export function serviceSchema(seg: Segmento) {
         },
       })),
     },
+  };
+}
+
+/**
+ * T2b — Lista de itens da página `/segmentos` (CollectionPage).
+ * Ajuda o Google a entender a coleção de verticais e a exibir links
+ * de sitelinks/itemlist nos resultados de busca.
+ */
+export function segmentosItemListSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Segmentos de atuação da Evoluke",
+    description:
+      "Setores de mercado e áreas da empresa onde a Evoluke aplica Inteligência Artificial.",
+    numberOfItems: segmentos.length,
+    itemListElement: segmentos.map((seg, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: `IA para ${seg.nome}`,
+      url: absoluteUrl(`/segmentos/${seg.slug}`),
+    })),
   };
 }
 

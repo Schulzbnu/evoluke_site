@@ -6,18 +6,15 @@ import Container from "@/components/Container";
 import SolutionCard from "@/components/SolutionCard";
 import CTASection from "@/components/CTASection";
 import JsonLd from "@/components/JsonLd";
-import {
-  getSegmento,
-  getSegmentoSlugs,
-  segmentos,
-} from "@/data/segmentos";
+import SegmentRail from "@/components/SegmentRail";
+import { getSegmento, getSegmentoSlugs, getCategoria } from "@/data/segmentos";
 import { serviceSchema, segmentoBreadcrumbSchema } from "@/data/structuredData";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-/** Gera as rotas estáticas das 6 verticais a partir do arquivo de dados. */
+/** Gera as rotas estáticas de todas as verticais a partir do arquivo de dados. */
 export function generateStaticParams() {
   return getSegmentoSlugs().map((slug) => ({ slug }));
 }
@@ -45,7 +42,7 @@ export default async function SegmentoPage({ params }: PageProps) {
   if (!seg) notFound();
 
   const Icon = seg.icon;
-  const outros = segmentos.filter((s) => s.slug !== seg.slug);
+  const categoria = getCategoria(seg.categoria);
 
   return (
     <>
@@ -76,7 +73,7 @@ export default async function SegmentoPage({ params }: PageProps) {
             </span>
             <div>
               <p className="text-sm font-semibold uppercase tracking-wider text-accent-300">
-                Segmento
+                {categoria.label}
               </p>
               <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">
                 IA para {seg.nome}
@@ -115,23 +112,9 @@ export default async function SegmentoPage({ params }: PageProps) {
       <section className="border-t border-ink-100 bg-ink-50 py-16">
         <Container>
           <h2 className="text-lg font-semibold text-ink-900">
-            Explore outros segmentos
+            Explore outros segmentos ({categoria.label.toLowerCase()})
           </h2>
-          <div className="mt-6 flex flex-wrap gap-3">
-            {outros.map((s) => {
-              const OutroIcon = s.icon;
-              return (
-                <Link
-                  key={s.slug}
-                  href={`/segmentos/${s.slug}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-ink-100 bg-white px-4 py-2 text-sm font-medium text-ink-900/75 transition-colors hover:border-accent-200 hover:text-accent-700"
-                >
-                  <OutroIcon className="h-4 w-4 text-accent-600" aria-hidden="true" />
-                  {s.nome}
-                </Link>
-              );
-            })}
-          </div>
+          <SegmentRail categoria={seg.categoria} currentSlug={seg.slug} />
         </Container>
       </section>
 

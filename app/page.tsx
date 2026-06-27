@@ -114,9 +114,11 @@ export default function HomePage() {
 
               <dl className="mt-12 grid max-w-xl grid-cols-3 gap-6 border-t border-white/10 pt-8 lg:mx-0 mx-auto">
                 <div>
-                  <dt className="text-3xl font-bold text-white">6</dt>
+                  <dt className="text-3xl font-bold text-white">
+                    {segmentos.length}
+                  </dt>
                   <dd className="mt-1 text-sm text-white/60">
-                    setores atendidos
+                    segmentos mapeados
                   </dd>
                 </div>
                 <div>
