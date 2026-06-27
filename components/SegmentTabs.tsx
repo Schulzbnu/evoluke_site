@@ -3,29 +3,72 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { segmentos } from "@/data/segmentos";
+import {
+  categorias,
+  getSegmentosByCategoria,
+  type CategoriaSegmento,
+} from "@/data/segmentos";
 
 /**
  * Seção de abas interativas dos segmentos (Home).
- * As mesmas verticais do arquivo `data/segmentos.ts` alimentam
- * tanto estas abas quanto as páginas de rota dedicadas.
+ * As mesmas verticais do arquivo `data/segmentos.ts` alimentam tanto
+ * estas abas quanto as páginas de rota dedicadas.
+ *
+ * Como há muitos segmentos, eles são divididos por categoria
+ * ("Por setor" / "Por área da empresa") num seletor mobile-first:
+ * só as abas da categoria ativa são exibidas, evitando poluição visual.
  */
 export default function SegmentTabs() {
-  const [ativo, setAtivo] = useState(0);
-  const seg = segmentos[ativo];
+  const [catId, setCatId] = useState<CategoriaSegmento>("setor");
+  const [slug, setSlug] = useState(getSegmentosByCategoria("setor")[0].slug);
+
+  const lista = getSegmentosByCategoria(catId);
+  const seg = lista.find((s) => s.slug === slug) ?? lista[0];
   const Icon = seg.icon;
+
+  function trocarCategoria(id: CategoriaSegmento) {
+    if (id === catId) return;
+    setCatId(id);
+    setSlug(getSegmentosByCategoria(id)[0].slug);
+  }
 
   return (
     <div>
-      {/* Abas */}
+      {/* Seletor de categoria */}
+      <div
+        role="tablist"
+        aria-label="Categoria de segmentos"
+        className="mx-auto flex max-w-md gap-1 rounded-full bg-ink-100/70 p-1"
+      >
+        {categorias.map((cat) => {
+          const selected = cat.id === catId;
+          return (
+            <button
+              key={cat.id}
+              role="tab"
+              aria-selected={selected}
+              onClick={() => trocarCategoria(cat.id)}
+              className={`flex-1 rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+                selected
+                  ? "bg-white text-ink-900 shadow-card"
+                  : "text-ink-900/60 hover:text-ink-900"
+              }`}
+            >
+              {cat.label}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Abas dos segmentos da categoria ativa */}
       <div
         role="tablist"
         aria-label="Segmentos de atuação"
-        className="flex flex-wrap justify-center gap-2"
+        className="mt-6 flex flex-wrap justify-center gap-2"
       >
-        {segmentos.map((s, i) => {
+        {lista.map((s) => {
           const TabIcon = s.icon;
-          const selected = i === ativo;
+          const selected = s.slug === seg.slug;
           return (
             <button
               key={s.slug}
@@ -34,7 +77,7 @@ export default function SegmentTabs() {
               aria-selected={selected}
               aria-controls={`painel-${s.slug}`}
               tabIndex={selected ? 0 : -1}
-              onClick={() => setAtivo(i)}
+              onClick={() => setSlug(s.slug)}
               className={`inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition-all ${
                 selected
                   ? "bg-accent text-white shadow-glow"
@@ -53,7 +96,7 @@ export default function SegmentTabs() {
         role="tabpanel"
         id={`painel-${seg.slug}`}
         aria-labelledby={`tab-${seg.slug}`}
-        className="mt-10 animate-fade-up rounded-3xl border border-ink-100 bg-white p-6 shadow-card sm:p-10"
+        className="mt-8 animate-fade-up rounded-3xl border border-ink-100 bg-white p-6 shadow-card sm:p-10"
         key={seg.slug}
       >
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">

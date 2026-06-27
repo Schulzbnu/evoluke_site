@@ -8,7 +8,7 @@ import Container from "./Container";
 import Logo from "./Logo";
 import Button from "./Button";
 import { navItems } from "@/data/site";
-import { segmentos } from "@/data/segmentos";
+import { categorias, getSegmentosByCategoria } from "@/data/segmentos";
 
 export default function Header() {
   const pathname = usePathname();
@@ -91,30 +91,71 @@ export default function Header() {
                     </button>
 
                     {segOpen && (
-                      <div className="absolute left-1/2 top-full z-50 w-[34rem] -translate-x-1/2 pt-3">
-                        <div className="grid grid-cols-2 gap-1 rounded-2xl border border-ink-100 bg-white p-3 shadow-card">
-                          {segmentos.map((seg) => {
-                            const Icon = seg.icon;
-                            return (
-                              <Link
-                                key={seg.slug}
-                                href={`/segmentos/${seg.slug}`}
-                                className="group flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-ink-50"
-                              >
-                                <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-accent-50 text-accent-600 transition-colors group-hover:bg-accent group-hover:text-white">
-                                  <Icon className="h-5 w-5" aria-hidden="true" />
-                                </span>
-                                <span>
-                                  <span className="block text-sm font-semibold text-ink-900">
-                                    {seg.nome}
-                                  </span>
-                                  <span className="mt-0.5 block text-xs leading-snug text-ink-900/55">
-                                    {seg.resumo}
-                                  </span>
-                                </span>
-                              </Link>
-                            );
-                          })}
+                      <div className="absolute left-1/2 top-full z-50 w-[46rem] -translate-x-1/2 pt-3">
+                        <div className="rounded-2xl border border-ink-100 bg-white p-4 shadow-card">
+                          <div className="grid grid-cols-3 gap-x-6 gap-y-2">
+                            {/* Por setor — ocupa 2 colunas */}
+                            <div className="col-span-2">
+                              <p className="px-2 pb-1 text-xs font-semibold uppercase tracking-wider text-ink-900/45">
+                                {categorias[0].label}
+                              </p>
+                              <div className="grid grid-cols-2 gap-0.5">
+                                {getSegmentosByCategoria("setor").map((seg) => {
+                                  const Icon = seg.icon;
+                                  return (
+                                    <Link
+                                      key={seg.slug}
+                                      href={`/segmentos/${seg.slug}`}
+                                      className="group flex items-center gap-2.5 rounded-lg px-2 py-2 transition-colors hover:bg-ink-50"
+                                    >
+                                      <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-accent-50 text-accent-600 transition-colors group-hover:bg-accent group-hover:text-white">
+                                        <Icon className="h-4 w-4" aria-hidden="true" />
+                                      </span>
+                                      <span className="text-sm font-medium text-ink-900">
+                                        {seg.nome}
+                                      </span>
+                                    </Link>
+                                  );
+                                })}
+                              </div>
+                            </div>
+
+                            {/* Por área da empresa */}
+                            <div className="border-l border-ink-100 pl-5">
+                              <p className="px-2 pb-1 text-xs font-semibold uppercase tracking-wider text-ink-900/45">
+                                {categorias[1].label}
+                              </p>
+                              <div className="grid gap-0.5">
+                                {getSegmentosByCategoria("area").map((seg) => {
+                                  const Icon = seg.icon;
+                                  return (
+                                    <Link
+                                      key={seg.slug}
+                                      href={`/segmentos/${seg.slug}`}
+                                      className="group flex items-center gap-2.5 rounded-lg px-2 py-2 transition-colors hover:bg-ink-50"
+                                    >
+                                      <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-accent-50 text-accent-600 transition-colors group-hover:bg-accent group-hover:text-white">
+                                        <Icon className="h-4 w-4" aria-hidden="true" />
+                                      </span>
+                                      <span className="text-sm font-medium text-ink-900">
+                                        {seg.nome}
+                                      </span>
+                                    </Link>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="mt-2 border-t border-ink-100 pt-2">
+                            <Link
+                              href="/segmentos"
+                              className="flex items-center gap-1.5 rounded-lg px-2 py-2 text-sm font-semibold text-accent-700 transition-colors hover:bg-ink-50 hover:text-accent-600"
+                            >
+                              Ver todos os segmentos
+                              <ChevronDown className="h-4 w-4 -rotate-90" aria-hidden="true" />
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     )}
@@ -181,24 +222,26 @@ export default function Header() {
                 </Link>
               ))}
 
-            <div className="pt-2">
-              <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-wider text-ink-900/45">
-                Segmentos
-              </p>
-              {segmentos.map((seg) => {
-                const Icon = seg.icon;
-                return (
-                  <Link
-                    key={seg.slug}
-                    href={`/segmentos/${seg.slug}`}
-                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-base text-ink-900/80 hover:bg-ink-50"
-                  >
-                    <Icon className="h-5 w-5 text-accent-600" aria-hidden="true" />
-                    {seg.nome}
-                  </Link>
-                );
-              })}
-            </div>
+            {categorias.map((cat) => (
+              <div key={cat.id} className="pt-2">
+                <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-wider text-ink-900/45">
+                  {cat.label}
+                </p>
+                {getSegmentosByCategoria(cat.id).map((seg) => {
+                  const Icon = seg.icon;
+                  return (
+                    <Link
+                      key={seg.slug}
+                      href={`/segmentos/${seg.slug}`}
+                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-base text-ink-900/80 hover:bg-ink-50"
+                    >
+                      <Icon className="h-5 w-5 text-accent-600" aria-hidden="true" />
+                      {seg.nome}
+                    </Link>
+                  );
+                })}
+              </div>
+            ))}
 
             <div className="pt-3">
               <Button href="/contato" className="w-full" size="lg">

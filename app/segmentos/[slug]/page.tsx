@@ -9,7 +9,8 @@ import JsonLd from "@/components/JsonLd";
 import {
   getSegmento,
   getSegmentoSlugs,
-  segmentos,
+  getCategoria,
+  getSegmentosByCategoria,
 } from "@/data/segmentos";
 import { serviceSchema, segmentoBreadcrumbSchema } from "@/data/structuredData";
 
@@ -17,7 +18,7 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-/** Gera as rotas estáticas das 6 verticais a partir do arquivo de dados. */
+/** Gera as rotas estáticas de todas as verticais a partir do arquivo de dados. */
 export function generateStaticParams() {
   return getSegmentoSlugs().map((slug) => ({ slug }));
 }
@@ -45,7 +46,10 @@ export default async function SegmentoPage({ params }: PageProps) {
   if (!seg) notFound();
 
   const Icon = seg.icon;
-  const outros = segmentos.filter((s) => s.slug !== seg.slug);
+  const categoria = getCategoria(seg.categoria);
+  const outros = getSegmentosByCategoria(seg.categoria).filter(
+    (s) => s.slug !== seg.slug,
+  );
 
   return (
     <>
@@ -76,7 +80,7 @@ export default async function SegmentoPage({ params }: PageProps) {
             </span>
             <div>
               <p className="text-sm font-semibold uppercase tracking-wider text-accent-300">
-                Segmento
+                {categoria.label}
               </p>
               <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">
                 IA para {seg.nome}
@@ -115,7 +119,7 @@ export default async function SegmentoPage({ params }: PageProps) {
       <section className="border-t border-ink-100 bg-ink-50 py-16">
         <Container>
           <h2 className="text-lg font-semibold text-ink-900">
-            Explore outros segmentos
+            Explore outros segmentos ({categoria.label.toLowerCase()})
           </h2>
           <div className="mt-6 flex flex-wrap gap-3">
             {outros.map((s) => {
