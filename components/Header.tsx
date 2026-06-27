@@ -14,14 +14,24 @@ export default function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [segOpen, setSegOpen] = useState(false);
+  // Acordeão do menu mobile: "Segmentos" e as categorias dentro dele.
+  const [segMobileOpen, setSegMobileOpen] = useState(false);
+  const [openCats, setOpenCats] = useState<string[]>([]);
   const segRef = useRef<HTMLLIElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Fecha o menu mobile ao navegar.
+  // Fecha o menu mobile (e recolhe o acordeão) ao navegar.
   useEffect(() => {
     setMobileOpen(false);
     setSegOpen(false);
+    setSegMobileOpen(false);
+    setOpenCats([]);
   }, [pathname]);
+
+  const toggleCat = (id: string) =>
+    setOpenCats((atual) =>
+      atual.includes(id) ? atual.filter((c) => c !== id) : [...atual, id],
+    );
 
   // Fecha o dropdown ao clicar fora ou pressionar Escape.
   useEffect(() => {
@@ -206,9 +216,107 @@ export default function Header() {
       {mobileOpen && (
         <div className="border-t border-ink-100 bg-white lg:hidden">
           <Container className="space-y-1 py-4">
-            {navItems
-              .filter((i) => i.label !== "Segmentos")
-              .map((item) => (
+            {navItems.map((item) => {
+              if (item.label === "Segmentos") {
+                return (
+                  <div key={item.href}>
+                    {/* Acordeão nível 1 — Segmentos */}
+                    <button
+                      type="button"
+                      aria-expanded={segMobileOpen}
+                      aria-controls="mobile-segmentos"
+                      onClick={() => setSegMobileOpen((v) => !v)}
+                      className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-base font-medium ${
+                        isActive("/segmentos")
+                          ? "bg-accent-50 text-accent-700"
+                          : "text-ink-900/80 hover:bg-ink-50"
+                      }`}
+                    >
+                      Segmentos
+                      <ChevronDown
+                        className={`h-5 w-5 transition-transform ${
+                          segMobileOpen ? "rotate-180" : ""
+                        }`}
+                        aria-hidden="true"
+                      />
+                    </button>
+
+                    <div
+                      id="mobile-segmentos"
+                      className={`grid transition-all duration-200 ease-out ${
+                        segMobileOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <div className="space-y-0.5 py-1 pl-2">
+                          {categorias.map((cat) => {
+                            const aberto = openCats.includes(cat.id);
+                            return (
+                              <div key={cat.id}>
+                                {/* Acordeão nível 2 — categoria */}
+                                <button
+                                  type="button"
+                                  aria-expanded={aberto}
+                                  aria-controls={`mobile-cat-${cat.id}`}
+                                  onClick={() => toggleCat(cat.id)}
+                                  className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-semibold text-ink-900/65 hover:bg-ink-50"
+                                >
+                                  {cat.label}
+                                  <ChevronDown
+                                    className={`h-4 w-4 transition-transform ${
+                                      aberto ? "rotate-180" : ""
+                                    }`}
+                                    aria-hidden="true"
+                                  />
+                                </button>
+
+                                <div
+                                  id={`mobile-cat-${cat.id}`}
+                                  className={`grid transition-all duration-200 ease-out ${
+                                    aberto ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                                  }`}
+                                >
+                                  <div className="overflow-hidden">
+                                    {getSegmentosByCategoria(cat.id).map((seg) => {
+                                      const Icon = seg.icon;
+                                      return (
+                                        <Link
+                                          key={seg.slug}
+                                          href={`/segmentos/${seg.slug}`}
+                                          className="flex items-center gap-3 rounded-lg py-2.5 pl-5 pr-3 text-base text-ink-900/80 hover:bg-ink-50"
+                                        >
+                                          <Icon
+                                            className="h-5 w-5 text-accent-600"
+                                            aria-hidden="true"
+                                          />
+                                          {seg.nome}
+                                        </Link>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+
+                          <Link
+                            href="/segmentos"
+                            className="flex items-center gap-1.5 rounded-lg px-3 py-2.5 text-sm font-semibold text-accent-700 hover:bg-ink-50"
+                          >
+                            Ver todos os segmentos
+                            <ChevronDown
+                              className="h-4 w-4 -rotate-90"
+                              aria-hidden="true"
+                            />
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+
+              return (
                 <Link
                   key={item.href}
                   href={item.href}
@@ -220,28 +328,8 @@ export default function Header() {
                 >
                   {item.label}
                 </Link>
-              ))}
-
-            {categorias.map((cat) => (
-              <div key={cat.id} className="pt-2">
-                <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-wider text-ink-900/45">
-                  {cat.label}
-                </p>
-                {getSegmentosByCategoria(cat.id).map((seg) => {
-                  const Icon = seg.icon;
-                  return (
-                    <Link
-                      key={seg.slug}
-                      href={`/segmentos/${seg.slug}`}
-                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-base text-ink-900/80 hover:bg-ink-50"
-                    >
-                      <Icon className="h-5 w-5 text-accent-600" aria-hidden="true" />
-                      {seg.nome}
-                    </Link>
-                  );
-                })}
-              </div>
-            ))}
+              );
+            })}
 
             <div className="pt-3">
               <Button href="/contato" className="w-full" size="lg">
