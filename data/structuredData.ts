@@ -7,7 +7,6 @@
 
 import { site } from "./site";
 import { segmentos, type Segmento } from "./segmentos";
-import type { BlogPost } from "@/lib/blog";
 
 /** Gera uma URL absoluta a partir de um caminho relativo. */
 function absoluteUrl(path: string): string {
@@ -119,76 +118,5 @@ export function segmentoBreadcrumbSchema(seg: Segmento) {
       name: item.name,
       item: absoluteUrl(item.path),
     })),
-  };
-}
-
-/** Trilha de navegação genérica a partir de pares (nome, caminho). */
-export function breadcrumbSchema(itens: { name: string; path: string }[]) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: itens.map((item, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: item.name,
-      item: absoluteUrl(item.path),
-    })),
-  };
-}
-
-/**
- * Blog — schema da página de listagem (`/blog`).
- * Descreve a coleção de posts para o Google.
- */
-export function blogSchema(posts: BlogPost[]) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Blog",
-    name: `Blog da ${site.nome}`,
-    description:
-      "Artigos sobre Inteligência Artificial aplicada a negócios: estratégia, casos de uso e boas práticas.",
-    url: absoluteUrl("/blog"),
-    inLanguage: "pt-BR",
-    publisher: {
-      "@type": "Organization",
-      name: site.nome,
-      url: site.url,
-    },
-    blogPost: posts.map((post) => ({
-      "@type": "BlogPosting",
-      headline: post.title,
-      description: post.excerpt,
-      url: absoluteUrl(`/blog/${post.slug}`),
-      datePublished: post.publishedAt,
-      dateModified: post.updatedAt,
-      author: { "@type": "Organization", name: post.author },
-    })),
-  };
-}
-
-/**
- * Blog — schema de um post individual (`/blog/[slug]`).
- * Usa BlogPosting com autor, datas, imagem e publisher.
- */
-export function blogPostingSchema(post: BlogPost) {
-  const url = absoluteUrl(`/blog/${post.slug}`);
-  return {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    description: post.excerpt,
-    url,
-    mainEntityOfPage: { "@type": "WebPage", "@id": url },
-    datePublished: post.publishedAt,
-    dateModified: post.updatedAt,
-    inLanguage: "pt-BR",
-    keywords: post.tags.join(", "),
-    image: [absoluteUrl(`/blog/${post.slug}/opengraph-image`)],
-    author: { "@type": "Organization", name: post.author, url: site.url },
-    publisher: {
-      "@type": "Organization",
-      name: site.nome,
-      url: site.url,
-    },
   };
 }
