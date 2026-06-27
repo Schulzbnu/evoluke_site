@@ -134,6 +134,22 @@ async function uniqueSlug(base: string): Promise<string> {
   return `${root}-${i}`;
 }
 
+/**
+ * `true` quando o erro indica que a tabela `posts` ainda não existe no banco
+ * (migração ainda não aplicada). Nesse caso as LEITURAS degradam para vazio em
+ * vez de quebrar o build/SSG — a tabela passa a responder assim que a migração
+ * roda. Qualquer outro erro continua propagando.
+ */
+function isMissingTable(
+  error: { code?: string; message?: string } | null,
+): boolean {
+  if (!error) return false;
+  return (
+    error.code === "PGRST205" ||
+    /could not find the table/i.test(error.message ?? "")
+  );
+}
+
 /* -------------------------------------------------------------------------- */
 /* API pública do módulo                                                      */
 /* -------------------------------------------------------------------------- */
@@ -152,7 +168,15 @@ export async function getAllPosts(options?: {
   if (!options?.includeDrafts) query = query.eq("status", "published");
 
   const { data, error } = await query;
-  if (error) throw error;
+  if (error) {
+    if (isMissingTable(error)) {
+      console.warn(
+        `[blog] Tabela "${TABLE}" não encontrada — rode supabase/migrations. Retornando lista vazia.`,
+      );
+      return [];
+    }
+    throw error;
+  }
   return (data as PostRow[]).map(rowToPost);
 }
 
@@ -169,7 +193,10 @@ export async function getPostBySlug(
     .eq("slug", slug)
     .maybeSingle();
 
-  if (error) throw error;
+  if (error) {
+    if (isMissingTable(error)) return null;
+    throw error;
+  }
   if (!data) return null;
 
   const post = rowToPost(data as PostRow);
@@ -187,7 +214,10 @@ export async function getAllSlugs(): Promise<string[]> {
     .eq("status", "published")
     .order("published_at", { ascending: false });
 
-  if (error) throw error;
+  if (error) {
+    if (isMissingTable(error)) return [];
+    throw error;
+  }
   return (data ?? []).map((r) => r.slug as string);
 }
 
@@ -200,7 +230,10 @@ export async function getAllTags(): Promise<string[]> {
     .select("tags")
     .eq("status", "published");
 
-  if (error) throw error;
+  if (error) {
+    if (isMissingTable(error)) return [];
+    throw error;
+  }
   const set = new Set<string>();
   (data ?? []).forEach((r) => (r.tags as string[] | null)?.forEach((t) => set.add(t)));
   return [...set].sort((a, b) => a.localeCompare(b, "pt-BR"));
