@@ -6,12 +6,8 @@ import Container from "@/components/Container";
 import SolutionCard from "@/components/SolutionCard";
 import CTASection from "@/components/CTASection";
 import JsonLd from "@/components/JsonLd";
-import {
-  getSegmento,
-  getSegmentoSlugs,
-  getCategoria,
-  getSegmentosByCategoria,
-} from "@/data/segmentos";
+import SegmentRail from "@/components/SegmentRail";
+import { getSegmento, getSegmentoSlugs, getCategoria } from "@/data/segmentos";
 import { serviceSchema, segmentoBreadcrumbSchema } from "@/data/structuredData";
 
 interface PageProps {
@@ -47,9 +43,6 @@ export default async function SegmentoPage({ params }: PageProps) {
 
   const Icon = seg.icon;
   const categoria = getCategoria(seg.categoria);
-  const outros = getSegmentosByCategoria(seg.categoria).filter(
-    (s) => s.slug !== seg.slug,
-  );
 
   return (
     <>
@@ -121,21 +114,7 @@ export default async function SegmentoPage({ params }: PageProps) {
           <h2 className="text-lg font-semibold text-ink-900">
             Explore outros segmentos ({categoria.label.toLowerCase()})
           </h2>
-          <div className="mt-6 flex flex-wrap gap-3">
-            {outros.map((s) => {
-              const OutroIcon = s.icon;
-              return (
-                <Link
-                  key={s.slug}
-                  href={`/segmentos/${s.slug}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-ink-100 bg-white px-4 py-2 text-sm font-medium text-ink-900/75 transition-colors hover:border-accent-200 hover:text-accent-700"
-                >
-                  <OutroIcon className="h-4 w-4 text-accent-600" aria-hidden="true" />
-                  {s.nome}
-                </Link>
-              );
-            })}
-          </div>
+          <SegmentRail categoria={seg.categoria} currentSlug={seg.slug} />
         </Container>
       </section>
 
