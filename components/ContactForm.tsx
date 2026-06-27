@@ -9,11 +9,19 @@ interface FormState {
   email: string;
   empresa: string;
   mensagem: string;
+  // Honeypot anti-spam (não exibido a humanos).
+  website: string;
 }
 
 type Errors = Partial<Record<keyof FormState, string>>;
 
-const emptyForm: FormState = { nome: "", email: "", empresa: "", mensagem: "" };
+const emptyForm: FormState = {
+  nome: "",
+  email: "",
+  empresa: "",
+  mensagem: "",
+  website: "",
+};
 
 function validate(values: FormState): Errors {
   const errors: Errors = {};
@@ -37,7 +45,10 @@ const inputBase =
 export default function ContactForm() {
   const [values, setValues] = useState<FormState>(emptyForm);
   const [errors, setErrors] = useState<Errors>({});
-  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
+    "idle",
+  );
+  const [errorMsg, setErrorMsg] = useState("");
 
   function update(field: keyof FormState, value: string) {
     setValues((v) => ({ ...v, [field]: value }));
@@ -51,17 +62,32 @@ export default function ContactForm() {
     if (Object.keys(found).length > 0) return;
 
     setStatus("loading");
+    setErrorMsg("");
 
-    // --- Handler mock ---------------------------------------------------
-    // Aqui o formulário apenas simula o envio. Para plugar um serviço de
-    // e-mail real (ex.: Resend, SendGrid, AWS SES) ou uma API route,
-    // substitua o bloco abaixo por uma chamada `fetch("/api/contato", ...)`.
-    console.log("[Contato] Envio simulado:", values);
-    await new Promise((r) => setTimeout(r, 800));
-    // --------------------------------------------------------------------
+    try {
+      const res = await fetch("/api/contato", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
 
-    setStatus("success");
-    setValues(emptyForm);
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(
+          data?.error ?? "Não foi possível enviar. Tente novamente.",
+        );
+      }
+
+      setStatus("success");
+      setValues(emptyForm);
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg(
+        err instanceof Error
+          ? err.message
+          : "Não foi possível enviar. Tente novamente.",
+      );
+    }
   }
 
   if (status === "success") {
@@ -94,6 +120,20 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-5">
+      {/* Honeypot anti-spam: escondido de humanos, ignorado por leitores de tela. */}
+      <div className="hidden" aria-hidden="true">
+        <label htmlFor="website">Não preencha este campo</label>
+        <input
+          id="website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={values.website}
+          onChange={(e) => update("website", e.target.value)}
+        />
+      </div>
+
       <div className="grid gap-5 sm:grid-cols-2">
         <Field
           id="nome"
@@ -153,6 +193,12 @@ export default function ContactForm() {
           </p>
         )}
       </div>
+
+      {status === "error" && (
+        <p role="alert" className="text-sm text-red-600">
+          {errorMsg}
+        </p>
+      )}
 
       <Button
         type="submit"
