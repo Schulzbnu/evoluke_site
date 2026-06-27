@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, Phone } from "lucide-react";
+import { Mail, MessageCircle } from "lucide-react";
 import Container from "./Container";
 import Logo from "./Logo";
 import { navItems, site } from "@/data/site";
@@ -65,10 +65,12 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href={`tel:${site.telefone.replace(/[^+\d]/g, "")}`}
+                  href={`https://wa.me/${site.telefone.replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-2 text-white/60 transition-colors hover:text-white"
                 >
-                  <Phone className="h-4 w-4" aria-hidden="true" />
+                  <MessageCircle className="h-4 w-4" aria-hidden="true" />
                   {site.telefone}
                 </a>
               </li>

@@ -13,7 +13,7 @@ export const site = {
   descricao:
     "A Evoluke é consultoria e desenvolvedora de produtos de IA. Entendemos o problema do seu negócio e entregamos a solução certa, da estratégia ao produto em produção.",
   email: "contato@evoluke.com.br",
-  telefone: "+55 (11) 4000-0000",
+  telefone: "+55 47 9704-2590",
 };
 
 /**
