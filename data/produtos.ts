@@ -191,9 +191,9 @@ export interface GrupoCapacidade {
 export const capacidades: GrupoCapacidade[] = [
   {
     id: "solucoes",
-    label: "Soluções de IA sob demanda",
+    label: "Demais produtos",
     descricao:
-      "Frentes que já dominamos e construímos sob medida para o seu caso.",
+      "Soluções de IA que desenvolvemos para diferentes áreas e setores.",
     itens: [
       {
         nome: "API de cálculos com IA",
@@ -241,9 +241,9 @@ export const capacidades: GrupoCapacidade[] = [
   },
   {
     id: "tecnologias",
-    label: "Tecnologias & plataformas que dominamos",
+    label: "Demais tecnologias",
     descricao:
-      "Ferramentas que usamos para colocar dados e IA em produção.",
+      "Plataformas de dados e BI que dominamos e colocamos em produção.",
     itens: [
       {
         nome: "Databricks",

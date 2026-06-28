@@ -49,7 +49,7 @@ export default function ProdutosPage() {
             <Container>
               <div className="max-w-2xl">
                 <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
-                  {cat.label}
+                  {cat.label} da Evoluke
                 </h2>
                 <p className="mt-3 text-ink-900/65">{cat.descricao}</p>
               </div>
@@ -95,32 +95,21 @@ export default function ProdutosPage() {
         );
       })}
 
-      {/* Capacidades sob demanda — frentes que dominamos, sem produto fechado.
-          Visual distinto dos produtos reais: cards informativos, sem link. */}
+      {/* Demais produtos e tecnologias — frentes que a Evoluke domina, exibidas
+          como cards informativos (sem rota individual e sem link externo). */}
       <section className="border-t border-ink-100 bg-ink-50 py-16 sm:py-20">
         <Container>
-          <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-wider text-accent-600">
-              Sob demanda
-            </p>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
-              Também desenvolvemos sob medida
-            </h2>
-            <p className="mt-3 text-ink-900/65">
-              Frentes que já dominamos e entregamos sob demanda. Ainda não viraram
-              um produto fechado — mas, se o seu caso pede, a gente constrói.
-            </p>
-          </div>
-
-          <div className="mt-10 space-y-12">
+          <div className="space-y-14">
             {capacidades.map((grupo) => (
               <div key={grupo.id}>
-                <h3 className="text-lg font-semibold text-ink-900">
-                  {grupo.label}
-                </h3>
-                <p className="mt-1 text-sm text-ink-900/55">{grupo.descricao}</p>
+                <div className="max-w-2xl">
+                  <h2 className="text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
+                    {grupo.label}
+                  </h2>
+                  <p className="mt-3 text-ink-900/65">{grupo.descricao}</p>
+                </div>
 
-                <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {grupo.itens.map((item) => {
                     const Icon = item.icon;
                     return (
@@ -145,10 +134,10 @@ export default function ProdutosPage() {
             ))}
           </div>
 
-          <div className="mt-10 flex flex-col items-start gap-4 border-t border-ink-100 pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mt-12 flex flex-col items-start gap-4 border-t border-ink-100 pt-8 sm:flex-row sm:items-center sm:justify-between">
             <p className="max-w-xl text-ink-900/70">
-              Tudo isso é desenvolvido pela mesma equipe por trás da consultoria
-              de IA da Evoluke. Tem um caso desses?
+              Desenvolvido pela mesma equipe por trás da consultoria de IA da
+              Evoluke.
             </p>
             <Link
               href="/contato"
