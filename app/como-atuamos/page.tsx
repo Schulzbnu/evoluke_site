@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   title: "Como atuamos",
   description:
     "O modelo da Evoluke vai da consultoria estratégica ao produto em produção: entender o problema, construir a solução de IA e escalar com segurança.",
+  alternates: { canonical: "/como-atuamos" },
 };
 
 const fases = [

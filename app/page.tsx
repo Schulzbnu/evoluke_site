@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -15,6 +16,12 @@ import SectionHeading from "@/components/SectionHeading";
 import SegmentTabs from "@/components/SegmentTabs";
 import CTASection from "@/components/CTASection";
 import { segmentos } from "@/data/segmentos";
+
+// Mantém título/descrição padrão do layout raiz; declara apenas o canonical
+// da home para padronizar com as demais rotas.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 const passos = [
   {

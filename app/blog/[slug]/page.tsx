@@ -146,7 +146,10 @@ export default async function BlogPostPage({ params }: PageProps) {
             src={post.coverImage}
             alt={post.coverAlt || post.title}
             className="aspect-[2/1] w-full rounded-2xl border border-ink-100 object-cover shadow-card"
-            loading="lazy"
+            // Capa no topo do artigo = provável elemento LCP: carrega com
+            // prioridade (não lazy) para melhorar o Largest Contentful Paint.
+            loading="eager"
+            fetchPriority="high"
             decoding="async"
           />
         </Container>
