@@ -10,8 +10,10 @@ import {
   Megaphone,
   Code2,
   Database,
-  Wand2,
   PieChart,
+  ArrowLeftRight,
+  ScanText,
+  Eye,
 } from "lucide-react";
 
 /**
@@ -202,6 +204,12 @@ export const capacidades: GrupoCapacidade[] = [
         icon: Sigma,
       },
       {
+        nome: "Conciliação financeira",
+        descricao:
+          "Cruzamento automático de extratos, lançamentos e pagamentos para fechar contas mais rápido e sem erro.",
+        icon: ArrowLeftRight,
+      },
+      {
         nome: "IA para Jurídico",
         descricao:
           "Análise e geração de documentos, triagem de processos e respostas a partir da sua base jurídica.",
@@ -243,7 +251,7 @@ export const capacidades: GrupoCapacidade[] = [
     id: "tecnologias",
     label: "Demais tecnologias",
     descricao:
-      "Plataformas de dados e BI que dominamos e colocamos em produção.",
+      "Tecnologias de dados, BI e imagem que dominamos e colocamos em produção.",
     itens: [
       {
         nome: "Databricks",
@@ -252,16 +260,22 @@ export const capacidades: GrupoCapacidade[] = [
         icon: Database,
       },
       {
-        nome: "Sala Genie",
-        descricao:
-          "Perguntas em linguagem natural sobre os seus dados com a sala Genie da Databricks.",
-        icon: Wand2,
-      },
-      {
         nome: "Power BI",
         descricao:
           "Dashboards e relatórios interativos conectados às suas fontes de dados.",
         icon: PieChart,
+      },
+      {
+        nome: "OCR",
+        descricao:
+          "Leitura e extração de dados de documentos, notas e imagens digitalizadas.",
+        icon: ScanText,
+      },
+      {
+        nome: "Visão computacional",
+        descricao:
+          "Detecção e análise de imagem para segurança, controle de qualidade e monitoramento.",
+        icon: Eye,
       },
     ],
   },
