@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { Boxes, LayoutGrid, Sparkles } from "lucide-react";
+import { Calculator, LayoutGrid } from "lucide-react";
 
 /**
  * Ecossistema de produtos da Evoluke.
@@ -97,41 +97,26 @@ export interface Produto {
 }
 
 export const produtos: Produto[] = [
-  // ⚠️ EXEMPLO — substitua pelos dados reais do produto.
   {
-    slug: "produto-exemplo",
-    nome: "Produto Exemplo",
-    categoria: "saas",
-    url: "https://www.exemplo.com.br",
-    tagline: "Uma frase curta que resume o que o produto faz.",
+    slug: "calculas",
+    nome: "Calculas",
+    categoria: "ferramenta",
+    url: "https://calculas.com.br",
+    tagline:
+      "Calculadoras para a vida toda — cálculos financeiros, trabalhistas e do dia a dia, sem cadastro.",
     descricao:
-      "Descreva aqui, em 2 a 4 frases reais, o que é o produto e qual problema ele resolve. Evite frases genéricas — quanto mais específico e único, melhor para o SEO e para a conversão.",
-    paraQuem: "Para quem é o produto (ex.: pequenas clínicas que agendam por WhatsApp).",
+      "O Calculas reúne mais de 130 calculadoras de finanças, direito trabalhista, impostos, imóveis, veículos e saúde, sempre com a memória de cálculo à vista — você vê como cada resultado foi obtido. Tudo gratuito e sem login. Para quem desenvolve, oferece ainda uma API REST com as tabelas atualizadas automaticamente.",
+    paraQuem:
+      "Para qualquer pessoa que precisa de uma conta confiável — de rescisão a financiamento — e para desenvolvedores que querem cálculos prontos via API.",
     destaques: [
-      "Primeiro diferencial concreto do produto",
-      "Segundo diferencial concreto do produto",
-      "Terceiro diferencial concreto do produto",
+      "Mais de 130 calculadoras em 10 categorias: finanças, trabalhista, impostos, imóveis, veículos, saúde e mais",
+      "Memória de cálculo transparente — cada resultado mostra como foi obtido",
+      "Sem cadastro: acesso gratuito e sem pedir dados pessoais",
+      "API REST para desenvolvedores, com 10.000 chamadas gratuitas por mês",
+      "Tabelas e regras atualizadas para 2026",
     ],
-    icon: Sparkles,
+    icon: Calculator,
     status: "ativo",
-  },
-  // ⚠️ EXEMPLO — substitua pelos dados reais do produto.
-  {
-    slug: "outro-produto-exemplo",
-    nome: "Outro Produto",
-    categoria: "plataforma",
-    url: "https://www.outro-exemplo.com.br",
-    tagline: "Outra frase curta resumindo a proposta de valor.",
-    descricao:
-      "Mesmo padrão do anterior: 2 a 4 frases reais e específicas sobre o que a plataforma entrega. Esse texto é o conteúdo principal da página do produto.",
-    paraQuem: "Para quem é esta plataforma.",
-    destaques: [
-      "Diferencial um",
-      "Diferencial dois",
-      "Diferencial três",
-    ],
-    icon: Boxes,
-    status: "em-breve",
   },
 ];
 
