@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Sobre",
   description:
     "A Evoluke é uma consultoria e desenvolvedora de produtos de IA. Nossa missão é resolver problemas de negócio com a solução de IA certa — em qualquer setor.",
+  alternates: { canonical: "/sobre" },
 };
 
 const diferenciais = [

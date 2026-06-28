@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Contato",
   description:
     "Fale com a Evoluke. Conte o seu desafio de negócio e descubra como a IA pode resolvê-lo — da estratégia ao produto em produção.",
+  alternates: { canonical: "/contato" },
 };
 
 const infos = [

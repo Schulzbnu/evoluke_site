@@ -29,6 +29,7 @@ export async function generateMetadata({
   return {
     title: `IA para ${seg.nome}`,
     description: seg.resumo,
+    alternates: { canonical: `/segmentos/${seg.slug}` },
     openGraph: {
       title: `IA para ${seg.nome} · Evoluke`,
       description: seg.resumo,
