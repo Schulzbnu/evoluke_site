@@ -7,6 +7,7 @@
 
 import { site } from "./site";
 import { segmentos, type Segmento } from "./segmentos";
+import { produtos, type Produto } from "./produtos";
 import type { BlogPost } from "@/lib/blog";
 
 /** Gera uma URL absoluta a partir de um caminho relativo. */
@@ -41,6 +42,14 @@ export function organizationSchema() {
       areaServed: "BR",
       availableLanguage: "Portuguese",
     },
+    // Conecta os produtos próprios à entidade Evoluke (Knowledge Graph).
+    // Cada produto referencia a Organization de volta via `publisher`,
+    // formando uma associação de entidade bidirecional e legítima.
+    owns: produtos.map((p) => ({
+      "@type": "SoftwareApplication",
+      name: p.nome,
+      url: p.url,
+    })),
   };
 }
 
@@ -134,6 +143,66 @@ export function breadcrumbSchema(itens: { name: string; path: string }[]) {
       item: absoluteUrl(item.path),
     })),
   };
+}
+
+/**
+ * Produtos — lista de itens da página `/produtos` (ItemList).
+ * Ajuda o Google a entender o ecossistema de produtos próprios e a exibir
+ * a coleção como itemlist nos resultados.
+ */
+export function produtosItemListSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: `Produtos da ${site.nome}`,
+    description:
+      "Ecossistema de produtos próprios da Evoluke — SaaS, plataformas e ferramentas.",
+    numberOfItems: produtos.length,
+    itemListElement: produtos.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: p.nome,
+      // URL interna da página do produto (mantém o usuário no domínio para
+      // ranqueamento próprio; o link externo fica no conteúdo da página).
+      url: absoluteUrl(`/produtos/${p.slug}`),
+    })),
+  };
+}
+
+/**
+ * Produtos — schema de um produto individual (`/produtos/[slug]`).
+ * Usa SoftwareApplication: `url` aponta para o site externo do produto e
+ * `publisher` declara a Evoluke como dona (associação de entidade).
+ */
+export function produtoSchema(produto: Produto) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: produto.nome,
+    description: produto.descricao,
+    // Site público do produto — sinaliza ao Google a relação entre domínios.
+    url: produto.url,
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Web",
+    inLanguage: "pt-BR",
+    publisher: {
+      "@type": "Organization",
+      name: site.nome,
+      url: site.url,
+    },
+  };
+}
+
+/**
+ * Produtos — trilha de navegação (breadcrumb) de uma página de produto:
+ * Início › Produtos › [Produto].
+ */
+export function produtoBreadcrumbSchema(produto: Produto) {
+  return breadcrumbSchema([
+    { name: "Início", path: "/" },
+    { name: "Produtos", path: "/produtos" },
+    { name: produto.nome, path: `/produtos/${produto.slug}` },
+  ]);
 }
 
 /**

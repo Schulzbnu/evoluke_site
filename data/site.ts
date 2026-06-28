@@ -58,6 +58,7 @@ export const navItems: NavItem[] = [
   { label: "Início", href: "/" },
   { label: "Como atuamos", href: "/como-atuamos" },
   { label: "Segmentos", href: "/segmentos" },
+  { label: "Produtos", href: "/produtos" },
   { label: "Sobre", href: "/sobre" },
   { label: "Blog", href: "/blog" },
 ];
