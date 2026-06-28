@@ -9,7 +9,7 @@ interface CTASectionProps {
 /** Bloco de chamada para ação (CTA) reutilizado ao fim das páginas. */
 export default function CTASection({
   title = "Tem um problema? Nós temos a solução de IA.",
-  description = "Não importa o setor nem o ponto de partida. Vamos entender seu desafio e desenhar o caminho certo — da estratégia ao produto em produção.",
+  description = "Não importa o setor nem o ponto de partida. Vamos entender seu desafio e desenhar o caminho certo.",
 }: CTASectionProps) {
   return (
     <section className="py-20 sm:py-28">
