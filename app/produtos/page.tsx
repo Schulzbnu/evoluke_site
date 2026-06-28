@@ -8,6 +8,7 @@ import JsonLd from "@/components/JsonLd";
 import {
   getCategoriasComProdutos,
   getProdutosByCategoria,
+  capacidades,
 } from "@/data/produtos";
 import { produtosItemListSchema } from "@/data/structuredData";
 
@@ -94,18 +95,66 @@ export default function ProdutosPage() {
         );
       })}
 
-      <section className="border-t border-ink-100 bg-ink-50 py-14 sm:py-16">
+      {/* Capacidades sob demanda — frentes que dominamos, sem produto fechado.
+          Visual distinto dos produtos reais: cards informativos, sem link. */}
+      <section className="border-t border-ink-100 bg-ink-50 py-16 sm:py-20">
         <Container>
-          <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-wider text-accent-600">
+              Sob demanda
+            </p>
+            <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
+              Também desenvolvemos sob medida
+            </h2>
+            <p className="mt-3 text-ink-900/65">
+              Frentes que já dominamos e entregamos sob demanda. Ainda não viraram
+              um produto fechado — mas, se o seu caso pede, a gente constrói.
+            </p>
+          </div>
+
+          <div className="mt-10 space-y-12">
+            {capacidades.map((grupo) => (
+              <div key={grupo.id}>
+                <h3 className="text-lg font-semibold text-ink-900">
+                  {grupo.label}
+                </h3>
+                <p className="mt-1 text-sm text-ink-900/55">{grupo.descricao}</p>
+
+                <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {grupo.itens.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <li
+                        key={item.nome}
+                        className="flex gap-3 rounded-xl border border-ink-100 bg-white p-5"
+                      >
+                        <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-accent-50 text-accent-600">
+                          <Icon className="h-5 w-5" aria-hidden="true" />
+                        </span>
+                        <div>
+                          <p className="font-medium text-ink-900">{item.nome}</p>
+                          <p className="mt-1 text-sm leading-relaxed text-ink-900/60">
+                            {item.descricao}
+                          </p>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 flex flex-col items-start gap-4 border-t border-ink-100 pt-8 sm:flex-row sm:items-center sm:justify-between">
             <p className="max-w-xl text-ink-900/70">
-              Todos os produtos acima são desenvolvidos e mantidos pela Evoluke
-              — a mesma equipe por trás da consultoria de IA.
+              Tudo isso é desenvolvido pela mesma equipe por trás da consultoria
+              de IA da Evoluke. Tem um caso desses?
             </p>
             <Link
-              href="/como-atuamos"
+              href="/contato"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-700 transition-colors hover:text-accent-600"
             >
-              Como construímos
+              Fale com a gente
               <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>

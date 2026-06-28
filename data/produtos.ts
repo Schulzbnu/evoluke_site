@@ -1,5 +1,18 @@
 import type { LucideIcon } from "lucide-react";
-import { Calculator, LayoutGrid } from "lucide-react";
+import {
+  Calculator,
+  LayoutGrid,
+  Sigma,
+  Scale,
+  UserCheck,
+  BarChart3,
+  ListChecks,
+  Megaphone,
+  Code2,
+  Database,
+  Wand2,
+  PieChart,
+} from "lucide-react";
 
 /**
  * Ecossistema de produtos da Evoluke.
@@ -151,3 +164,105 @@ export function getCategoriasComProdutos(): CategoriaProdutoInfo[] {
 
 /** Ícone padrão para representar o ecossistema (usado no menu). */
 export const produtosIcon: LucideIcon = LayoutGrid;
+
+// ── Capacidades sob demanda ────────────────────────────────────────────────
+/**
+ * Frentes que a Evoluke domina e entrega SOB MEDIDA, mas que ainda NÃO viraram
+ * um produto fechado com site próprio. São exibidas como cards leves na página
+ * `/produtos` — SEM rota individual e SEM link externo (não há produto/URL
+ * concreto). Servem para mostrar amplitude e cobrir termos de busca, sem criar
+ * páginas "magras" nem backlinks falsos. Quando uma frente virar um produto
+ * real, mova-a para o array `produtos` acima (ganha página + link).
+ */
+export interface Capacidade {
+  nome: string;
+  /** 1 frase honesta sobre o que entregamos nessa frente. */
+  descricao: string;
+  icon: LucideIcon;
+}
+
+export interface GrupoCapacidade {
+  id: string;
+  label: string;
+  descricao: string;
+  itens: Capacidade[];
+}
+
+export const capacidades: GrupoCapacidade[] = [
+  {
+    id: "solucoes",
+    label: "Soluções de IA sob demanda",
+    descricao:
+      "Frentes que já dominamos e construímos sob medida para o seu caso.",
+    itens: [
+      {
+        nome: "API de cálculos com IA",
+        descricao:
+          "Endpoints de cálculo financeiro, trabalhista e fiscal somados a IA que interpreta e explica os resultados.",
+        icon: Sigma,
+      },
+      {
+        nome: "IA para Jurídico",
+        descricao:
+          "Análise e geração de documentos, triagem de processos e respostas a partir da sua base jurídica.",
+        icon: Scale,
+      },
+      {
+        nome: "IA para entrevista de emprego",
+        descricao:
+          "Triagem de candidatos, roteiros de entrevista e avaliação assistida por IA.",
+        icon: UserCheck,
+      },
+      {
+        nome: "IA para análise de dados",
+        descricao:
+          "Modelos e agentes que transformam dados brutos em respostas e decisões.",
+        icon: BarChart3,
+      },
+      {
+        nome: "IA para gestão de times e tarefas",
+        descricao:
+          "Priorização, acompanhamento e resumo automático de tarefas e equipes.",
+        icon: ListChecks,
+      },
+      {
+        nome: "Automação de marketing",
+        descricao:
+          "Fluxos, conteúdo e segmentação automatizados para gerar e nutrir leads.",
+        icon: Megaphone,
+      },
+      {
+        nome: "Desenvolvimento de aplicações e sites",
+        descricao:
+          "Construção de produtos web sob medida — do MVP à produção.",
+        icon: Code2,
+      },
+    ],
+  },
+  {
+    id: "tecnologias",
+    label: "Tecnologias & plataformas que dominamos",
+    descricao:
+      "Ferramentas que usamos para colocar dados e IA em produção.",
+    itens: [
+      {
+        nome: "Databricks",
+        descricao:
+          "Engenharia de dados e machine learning em escala na Lakehouse Platform.",
+        icon: Database,
+      },
+      {
+        nome: "Sala Genie",
+        descricao:
+          "Perguntas em linguagem natural sobre os seus dados com a sala Genie da Databricks.",
+        icon: Wand2,
+      },
+      {
+        nome: "Power BI",
+        descricao:
+          "Dashboards e relatórios interativos conectados às suas fontes de dados.",
+        icon: PieChart,
+      },
+    ],
+  },
+];
