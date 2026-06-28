@@ -1,15 +1,29 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/data/site";
 import { getSegmentoSlugs } from "@/data/segmentos";
+import { getProdutoSlugs } from "@/data/produtos";
 import { getAllPosts } from "@/lib/blog";
 
 export const revalidate = 60;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const rotas = ["", "/como-atuamos", "/segmentos", "/sobre", "/blog", "/contato"];
+  const rotas = [
+    "",
+    "/como-atuamos",
+    "/segmentos",
+    "/produtos",
+    "/sobre",
+    "/blog",
+    "/contato",
+  ];
   const segmentos = getSegmentoSlugs().map((slug) => `/segmentos/${slug}`);
+  const produtos = getProdutoSlugs().map((slug) => `/produtos/${slug}`);
 
-  const estaticas: MetadataRoute.Sitemap = [...rotas, ...segmentos].map(
+  const estaticas: MetadataRoute.Sitemap = [
+    ...rotas,
+    ...segmentos,
+    ...produtos,
+  ].map(
     (path) => ({
       url: `${site.url}${path}`,
       lastModified: new Date(),
