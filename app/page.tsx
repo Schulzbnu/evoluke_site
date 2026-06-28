@@ -98,8 +98,7 @@ export default function HomePage() {
 
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70 sm:text-xl lg:mx-0 mx-auto">
                 A Evoluke não vende uma tecnologia específica. Entendemos o
-                problema do seu negócio e entregamos a solução de IA certa — da
-                consultoria estratégica ao produto em produção.
+                problema do seu negócio e entregamos a solução de IA certa.
               </p>
 
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">

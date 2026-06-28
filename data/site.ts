@@ -60,5 +60,4 @@ export const navItems: NavItem[] = [
   { label: "Segmentos", href: "/segmentos" },
   { label: "Sobre", href: "/sobre" },
   { label: "Blog", href: "/blog" },
-  { label: "Contato", href: "/contato" },
 ];
